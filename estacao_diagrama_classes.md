@@ -3,7 +3,7 @@
 ## Classes e Atributos
 
 ### Sensor
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `id: String`          | `+ coletarDados(): void`  |
 | `tipo: String`        | `+ enviarDados(): void`   |
@@ -14,7 +14,7 @@
 ---
 
 ### TemperaturaSolo
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `valor: Float`        | `+ coletarDados(): void`  |
 |                       | `+ enviarDados(): void`   |
@@ -24,7 +24,7 @@
 ---
 
 ### UmidadeSolo
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `valor: Float`        | `+ coletarDados(): void`  |
 |                       | `+ enviarDados(): void`   |
@@ -34,7 +34,7 @@
 ---
 
 ### TemperaturaAr
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `valor: Float`        | `+ coletarDados(): void`  |
 |                       | `+ enviarDados(): void`   |
@@ -44,7 +44,7 @@
 ---
 
 ### UmidadeAr
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `valor: Float`        | `+ coletarDados(): void`  |
 |                       | `+ enviarDados(): void`   |
@@ -54,7 +54,7 @@
 ---
 
 ### PressaoAtmosferica
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `valor: Float`        | `+ coletarDados(): void`  |
 |                       | `+ enviarDados(): void`   |
@@ -64,7 +64,7 @@
 ---
 
 ### Luminosidade
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `valor: Float`        | `+ coletarDados(): void`  |
 |                       | `+ enviarDados(): void`   |
@@ -74,7 +74,7 @@
 ---
 
 ### VelocidadeVento
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `valor: Float`        | `+ coletarDados(): void`  |
 |                       | `+ enviarDados(): void`   |
@@ -84,7 +84,7 @@
 ---
 
 ### DirecaoVento
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `valor: Float`        | `+ coletarDados(): void`  |
 |                       | `+ enviarDados(): void`   |
@@ -94,7 +94,7 @@
 ---
 
 ### IndicadorChuva
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `valor: Boolean`      | `+ coletarDados(): void`  |
 |                       | `+ enviarDados(): void`   |
@@ -104,15 +104,15 @@
 ---
 
 ### Camera
-| Atributos             | Métodos                    |
-|-----------------------|----------------------------|
+| Atributos             | Métodos                      |
+|-----------------------|------------------------------|
 | `id: String`          | `+ capturarImagem(): Imagem` |
-| `descricao: String`  | `+ enviarImagem(): void`    |
+| `descricao: String`   | `+ enviarImagem(): void`     |
 
 ---
 
 ### Imagem
-| Atributos             | Métodos                     |
+| Atributos             | Métodos                      |
 |-----------------------|------------------------------|
 | `id: String`          | `+ processarImagem(): void`  |
 | `dataHora: Date`      |                              |
@@ -124,28 +124,28 @@
 | Atributos              | Métodos                                      |
 |------------------------|----------------------------------------------|
 | `dados: List<Dado>`    | `+ receberDados(dado: Dado): void`           |
-| `imagens: List<Imagem>` | `+ receberImagem(imagem: Imagem): void`    |
-|                        | `+ agruparDados(): void`                    |
-|                        | `+ fornecerDadosParaAplicativo(): void`     |
+| `imagens: List<Imagem>` | `+ receberImagem(imagem: Imagem): void`     |
+|                        | `+ agruparDados(): void`                     |
+|                        | `+ fornecerDadosParaAplicativo(): void`      |
 
 ---
 
 ### InterfaceWeb
 | Atributos             | Métodos                                      |
 |-----------------------|----------------------------------------------|
-| `grafico: Grafico`    | `+ mostrarGrafico(dados: List<Dado>): void` |
+| `grafico: Grafico`    | `+ mostrarGrafico(dados: List<Dado>): void`  |
 
 ---
 
 ### AplicativoSmartphone
-| Atributos              | Métodos                                |
-|------------------------|----------------------------------------|
+| Atributos              | Métodos                                        |
+|------------------------|------------------------------------------------|
 | `dadosAgrupados: List<Dado>` | `+ exibirDados(dados: List<Dado>): void` |
 
 ---
 
 ### Dado
-| Atributos             | Métodos                  |
+| Atributos             | Métodos                   |
 |-----------------------|---------------------------|
 | `id: String`          | `+ processarDado(): void` |
 | `sensorId: String`    |                           |
@@ -156,7 +156,7 @@
 
 ## Relações Entre Classes
 
-- **Sensor** é a classe base para todas as classes de sensores específicos (e.g., `TemperaturaSolo`, `UmidadeSolo`, etc.).
+- **Sensor** é a classe base para todas as classes de sensores específicos (`TemperaturaSolo`, `UmidadeSolo`, etc.).
 - **Camera** captura **Imagem** e envia para **ServidorNuvem**.
 - **ServidorNuvem** armazena **Dado** e **Imagem** e fornece dados agrupados para **InterfaceWeb** e **AplicativoSmartphone**.
 - **InterfaceWeb** mostra gráficos baseados em **Dado**.
