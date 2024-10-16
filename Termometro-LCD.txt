@@ -1,0 +1,112 @@
+// Comunicacao LCD em 8 bits
+// Pinos de dados e comandos
+const int D7 = 7;
+const int D6 = 6;
+const int D5 = 5;
+const int D4 = 4;
+const int D3 = 3;
+const int D2 = 2;
+const int D1 = 1;
+const int D0 = 0;
+
+// Pinos de Controle
+const int RS = 8;  // Clock
+const int EN = 9;  // Comando ou dado
+
+// Entrada Analógica para o sensor de temperatura
+const int TMP = A0;
+
+// Função para enviar comandos ao LCD
+void lcd_cmd(byte cmd) {
+  digitalWrite(RS, LOW);  // RS = 0 para comando
+  digitalWrite(D0, cmd & 0x01);
+  digitalWrite(D1, (cmd >> 1) & 0x01);
+  digitalWrite(D2, (cmd >> 2) & 0x01);
+  digitalWrite(D3, (cmd >> 3) & 0x01);
+  digitalWrite(D4, (cmd >> 4) & 0x01);
+  digitalWrite(D5, (cmd >> 5) & 0x01);
+  digitalWrite(D6, (cmd >> 6) & 0x01);
+  digitalWrite(D7, (cmd >> 7) & 0x01);
+  digitalWrite(EN, HIGH);  // Pulso no Enable para enviar o comando
+  delayMicroseconds(1);
+  digitalWrite(EN, LOW);
+  delay(2);
+}
+
+// Função para enviar dados ao LCD
+void lcd_data(byte data) {
+  digitalWrite(RS, HIGH);  // RS = 1 para dados
+  digitalWrite(D0, data & 0x01);
+  digitalWrite(D1, (data >> 1) & 0x01);
+  digitalWrite(D2, (data >> 2) & 0x01);
+  digitalWrite(D3, (data >> 3) & 0x01);
+  digitalWrite(D4, (data >> 4) & 0x01);
+  digitalWrite(D5, (data >> 5) & 0x01);
+  digitalWrite(D6, (data >> 6) & 0x01);
+  digitalWrite(D7, (data >> 7) & 0x01);
+  digitalWrite(EN, HIGH);  // Pulso no Enable para enviar o dado
+  delayMicroseconds(1);
+  digitalWrite(EN, LOW);
+  delay(2);
+}
+
+// Inicializa o LCD
+void lcd_init() {
+  lcd_cmd(0x38);  // Configuração: 8 bits, 2 linhas, 5x8 font
+  lcd_cmd(0x0C);  // Liga display, cursor off
+  lcd_cmd(0x06);  // Incremento do cursor
+  lcd_cmd(0x01);  // Limpa o display
+  delay(5);
+}
+
+// Função para exibir uma string no LCD
+void lcd_print(const char *str) {
+  while (*str) {
+    lcd_data(*str++);
+  }
+}
+
+void setup() {
+  // Configura os pinos como saída
+  pinMode(RS, OUTPUT);
+  pinMode(EN, OUTPUT);
+  pinMode(D0, OUTPUT);
+  pinMode(D1, OUTPUT);
+  pinMode(D2, OUTPUT);
+  pinMode(D3, OUTPUT);
+  pinMode(D4, OUTPUT);
+  pinMode(D5, OUTPUT);
+  pinMode(D6, OUTPUT);
+  pinMode(D7, OUTPUT);
+  
+  // Inicializa o LCD
+  lcd_init();
+  
+  // Exibe mensagem inicial
+  lcd_cmd(0xC0);  // Posição do cursor (linha 1, coluna 1)
+  lcd_print("Temp: ");
+}
+
+void loop() {
+  // Leitura do sensor de temperatura
+  int leitura = analogRead(TMP);
+  //float temperatura = leitura * 0.48828125;  // Converte para graus Celsius
+   
+  float tensao = leitura * (5000.0 / 1023.0); // Convertendo para mV
+    float temperatura = (tensao - 500) / 10.0;
+    int temperaturaInt = int(temperatura); // Obtém a parte inteira da temperatura
+  
+  
+  // Limpa a linha 2 do LCD e mostra a temperatura
+  lcd_cmd(0xC0);  // Posição do cursor (linha 2, coluna 1)
+  lcd_print("Temp: ");
+  
+  // Converte a temperatura para string
+  char tempStr[5];
+  dtostrf(temperatura, 4, 1, tempStr);  // Converte float para string
+  lcd_print(tempStr);
+  lcd_print(" C");
+
+  delay(10);  // Aguarda meio segundo antes da próxima leitura
+}
+
